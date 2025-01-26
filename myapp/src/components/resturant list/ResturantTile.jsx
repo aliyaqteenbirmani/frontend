@@ -1,11 +1,17 @@
 import React from "react";
 import "./tilestyle.css";
 
-export default function ResturantTile({ restaurant }) {
+export default function ResturantTile({ restaurant, onDelete }) {
+  const handleDelete = () => {
+    // Trigger the delete function passed as a prop
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      onDelete(restaurant.id);
+    }
+  };
+
   return (
     <div className="tile-container">
       <div className="tile-image">
-        {/* Replace with actual image URL if available */}
         <img
           src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="Restaurant"
@@ -15,15 +21,14 @@ export default function ResturantTile({ restaurant }) {
         <div className="tile-column">
           <h3>{restaurant.name}</h3>
           <p>{restaurant.description}</p>
+          <p>{restaurant.id}</p>
         </div>
         <div className="tile-operation">
           <div className="tile-time-rating">
             <div className="tile-time">
-              {/* Format opening hours or add custom logic for time display */}
               <p id="timing">{restaurant.openingHours}</p>
             </div>
             <div className="tile-rating">
-              {/* Display rating (e.g., as stars) */}
               <p>{restaurant.rating} ⭐</p>
             </div>
           </div>
@@ -35,7 +40,7 @@ export default function ResturantTile({ restaurant }) {
               <button>Edit</button>
             </div>
             <div className="tile-button" style={{ backgroundColor: "red" }}>
-              <button>Delete</button>
+              <button onClick={handleDelete}>Delete</button>
             </div>
           </div>
         </div>
