@@ -29,23 +29,34 @@ const RestaurantForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Use FormData to include the image
-    const formPayload = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formPayload.append(key, formData[key]);
-    });
+    // Transform the form data to match API format
+    const transformedData = {
+      ...formData,
+      contactInfo: formData.contactNo,
+      ratings: parseInt(formData.rating, 10) || 0,
+      seatingCapacity: parseInt(formData.seatingCapacity, 10) || 0,
+      popularityIndex: parseInt(formData.popularityIndex, 10) || 0,
+      cuisineTypes: formData.cuisineTypes ? [formData.cuisineTypes] : [],
+      latitude: 0, // Placeholder, update with real value if needed
+      longitude: 0, // Placeholder, update with real value if needed
+      healthRating: 0, // Placeholder, update with real value if needed
+    };
+    delete transformedData.contactNo;
+    delete transformedData.rating;
 
-    if (image) {
-      formPayload.append("image", image);
-    }
-    formPayload.forEach((value, key) => {
-      console.log(key, value);
-    });
+    console.log("Transformed Data:", transformedData);
+
     try {
-      const response = await fetch("https://your-api-endpoint.com/restaurant", {
-        method: "POST",
-        body: formPayload,
-      });
+      const response = await fetch(
+        "https://localhost:7037/api/Restaurant/AddNewItem",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(transformedData),
+        }
+      );
 
       if (response.ok) {
         console.log("Form submitted successfully");
@@ -137,10 +148,10 @@ const RestaurantForm = () => {
                   value={formData.cuisineTypes}
                   onChange={handleChange}
                   style={{
-                    backgroundColor: "transparent", // Remove background color
-                    border: "none", // Remove border
-                    outline: "none", // Remove outline (focus border)
-                    padding: "6px", // Optional padding to make it look better
+                    backgroundColor: "transparent",
+                    border: "none",
+                    outline: "none",
+                    padding: "6px",
                   }}
                 >
                   <option value="">Select Cuisine Type</option>
