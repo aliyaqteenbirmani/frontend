@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MyRestCard from "./MyRestCard/MyRestCard";
  
 const RestaurantCard = ({ data, onDelete }) => {
   return (
@@ -6,30 +7,14 @@ const RestaurantCard = ({ data, onDelete }) => {
 <div>
 <h2>{data.name}</h2>
 <p>{data.description}</p>
-<p>
-<strong>Opening Hours:</strong> {data.openingHours}
-</p>
+
 <p>
 <strong>Contact:</strong> {data.contactInfo}
 </p>
 <p>
 <strong>Address:</strong> {data.address}
 </p>
-<p>
-<strong>Cuisine Types:</strong> {data.cuisineTypes.join(", ")}
-</p>
-<p>
-<strong>Health Rating:</strong> {data.healthRating}%
-</p>
-<p>
-<strong>Seating Capacity:</strong> {data.seatingCapacity}
-</p>
-<p>
-<strong>Popularity Index:</strong> {data.popularityIndex.toLocaleString()}
-</p>
-<p>
-<strong>Special Offers:</strong> {data.specialOffers}
-</p>
+
 </div>
 <div style={styles.actions}>
 <button style={styles.editButton}>Edit</button>
@@ -82,10 +67,10 @@ const RestaurantsContainer = () => {
 </button>
 <div style={styles.list}>
         {restaurants.map((restaurant) => (
-<RestaurantCard
-            key={restaurant.id}
-            data={restaurant}
-            onDelete={deleteRestaurant}
+<MyRestCard
+            // key={restaurant.id}
+            // data={restaurant}
+            // onDelete={deleteRestaurant}
           />
         ))}
 </div>
